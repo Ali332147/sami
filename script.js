@@ -62,43 +62,8 @@
     saveBlob(output);
   }
 
-  // iPhone prints at the phone width (~390px) => 2 pages.
-  // Fix: tap 1 switches the page to Letter width (816px) and waits,
-  // tap 2 ("Print Now") opens the print dialog on the settled layout.
-  let printReady = false;
-  let originalViewport = null;
-
-  function leavePrintMode() {
-    printReady = false;
-    const meta = document.querySelector('meta[name="viewport"]');
-    if (meta && originalViewport !== null) meta.setAttribute("content", originalViewport);
-    const p = document.getElementById("printBtn");
-    if (p) p.textContent = "Print";
-  }
-
   function printLedger() {
-    const meta = document.querySelector('meta[name="viewport"]');
-    const p = document.getElementById("printBtn");
-    const isPhone = /iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-      (navigator.maxTouchPoints > 1 && /Mac/i.test(navigator.platform));
-
-    // Desktop / Android: print straight away.
-    if (!isPhone || !meta) {
-      window.print();
-      return;
-    }
-
-    if (!printReady) {
-      originalViewport = meta.getAttribute("content");
-      meta.setAttribute("content", "width=816");
-      printReady = true;
-      if (p) p.textContent = "Print Now";
-      return;
-    }
-
-    window.addEventListener("afterprint", leavePrintMode, { once: true });
     window.print();
-    setTimeout(leavePrintMode, 20000);
   }
 
   window.downloadLedger = downloadLedger;

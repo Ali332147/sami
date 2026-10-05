@@ -2137,3 +2137,56 @@ body.editing select {
     line-height: 1 !important;
   }
 }
+
+
+/* =========================================================
+   PROPORTIONAL PRINT — everything scales with the page WIDTH,
+   so the ledger has the same shape on iPhone, Android, desktop.
+   (iPhone prints at a narrower layout width, so fixed px made it
+   too tall and pushed CASH DROP to page 2.)  KEEP THIS LAST.
+   ========================================================= */
+@media print {
+  .app-shell { container-type: inline-size; }
+}
+
+@supports (width: 1cqw) {
+@media print {
+  .app-shell { --u: calc(100cqw / 816); }
+
+  body { font-size: calc(12 * var(--u)) !important; }
+
+  .ledger-head > div { padding: calc(1 * var(--u)) calc(8 * var(--u)) !important; }
+  .ledger-head label { font-size: calc(9 * var(--u)) !important; }
+  .ledger-head input { height: calc(22 * var(--u)) !important; font-size: calc(10 * var(--u)) !important; padding: 0 calc(4 * var(--u)) !important; }
+  .brand-block input { font-size: calc(15 * var(--u)) !important; }
+  .date-block input, .day-block input { font-size: calc(10 * var(--u)) !important; }
+
+  .compact-ledger .section { padding: calc(22 * var(--u)) calc(16 * var(--u)) calc(24 * var(--u)) calc(16 * var(--u)) !important; }
+  .compact-ledger .section-title { margin: 0 0 calc(12 * var(--u)) !important; }
+  .compact-ledger .section-title h2 { font-size: calc(14 * var(--u)) !important; padding-bottom: calc(5 * var(--u)) !important; }
+
+  label, .field-row > label { font-size: calc(11 * var(--u)) !important; }
+
+  .field-row  { height: calc(48 * var(--u)) !important; min-height: calc(48 * var(--u)) !important; gap: calc(8 * var(--u)) !important; }
+  .serial-row { height: calc(46 * var(--u)) !important; min-height: calc(46 * var(--u)) !important; grid-template-columns: calc(30 * var(--u)) minmax(0,1fr) !important; }
+  .named-row  { height: calc(46 * var(--u)) !important; min-height: calc(46 * var(--u)) !important; }
+  .mini-row   { height: calc(46 * var(--u)) !important; min-height: calc(46 * var(--u)) !important; }
+
+  .serial-row > span, .named-row > span { font-size: calc(12 * var(--u)) !important; }
+  .total-row span { font-size: calc(12 * var(--u)) !important; }
+
+  input, textarea, select {
+    height: calc(34 * var(--u)) !important; min-height: 0 !important;
+    font-size: calc(11 * var(--u)) !important; padding: calc(4 * var(--u)) calc(6 * var(--u)) !important;
+  }
+
+  .total-row {
+    height: calc(42 * var(--u)) !important; min-height: calc(42 * var(--u)) !important;
+    margin: calc(8 * var(--u)) 0 0 !important; padding: calc(8 * var(--u)) 0 0 !important;
+    font-size: calc(12 * var(--u)) !important;
+  }
+  .total-row strong { font-size: calc(14 * var(--u)) !important; }
+  .ha-title { margin: calc(10 * var(--u)) 0 calc(4 * var(--u)) !important; padding: calc(6 * var(--u)) 0 !important; font-size: calc(12 * var(--u)) !important; }
+  .cigar-section .mini-table { margin-bottom: calc(18 * var(--u)) !important; }
+}
+}
