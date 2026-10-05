@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar no-print">
+      <div>
+        
+       
+      </div>
+     
+    
+<div class="toolbar no-print">
+      <button type="button" class="btn btn-secondary" id="downloadBtn" onclick="downloadLedger()">Download</button>
+      <button type="button" class="btn btn-primary" id="printBtn" onclick="printLedger()">Print</button>
+    </div>
+</header>
+
+    <main class="ledger-card compact-ledger">
+      <section class="ledger-head">
+        <div class="brand-block">
+          <input id="businessName" value="1270 WELLWOOD AVE" />
+        </div>
+        <div class="date-block">
+          <label for="ledgerDate">Date : </label>
+          
+        </div>
+        <div class="day-block">
+          <label for="ledgerDay">Day :</label>
+          <input id="ledgerDay" readonly />
+        </div>
+      </section>
+
+      <section class="ledger-grid">
+        <!-- LEFT -->
+        <div class="column left-column">
+          <div class="section cigar-section">
+            <div class="section-title">
+              <h2>LOTTO</h2>
+            </div>
+          
+          </div>
+<!-- This is a comment -->
+          <div class="section cigar-section">
+            <div class="section-title">
+              <h2>CIGAR</h2>
+            </div>
+            <div class="mini-table">
+              <!--<div class="mini-row header"><span>Type</span><span>Amount</span></div>-->
+              <div class="mini-row">
+                <input value="Add+" />
+                <!--<input class="money cigar" type="number" step="0.01" placeholder="0.00" />-->
+              </div>
+              <div class="mini-row">
+                <input value="Carton" />
+                <!--<input class="money cigar" type="number" step="0.01" placeholder="0.00" />-->
+              </div>
+              <div class="mini-row">
+                <input value="Pack" />
+                <!--<input class="money cigar" type="number" step="0.01" placeholder="0.00" />-->
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">
+              <h2>SUBWAY</h2>
+            </div>
+            <div class="field-row">
+              <label>Cash</label>
+              <!--<input class="money subway" type="number" step="0.01" value="66.00" />-->
+            </div>
+            <div class="field-row">
+              <label>Credit</label>
+              <!--<input class="money subway" type="number" step="0.01" placeholder="0.00" />-->
+            </div>
+            <div class="total-row">
+              <span>Total</span>
+             <!--<strong id="subwayTotal">$66.00</strong>--> 
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">
+              <h2>GAS INVENTORY</h2>
+            </div>
+            <div class="field-row">
+              <label>Reg</label>
+              <!--<input type="number" step="1" id="gasR" value="2632" />-->
+            </div>
+            <div class="field-row">
+              <label>Sup</label>
+              <!--<input type="number" step="1" id="gasS" value="914" />-->
+            </div>
+            <div class="total-row">
+              <span>Total Gal</span>
+              <!--<strong id="gasInventoryTotal">3,546</strong>-->
+            </div>
+          </div>
+        </div>
+
+        <!-- CENTER -->
+        <div class="column center-column">
+          <div class="section">
+            <div class="section-title">
+              <h2>PAYMENT DETAILS</h2>
+            </div>
+            <div class="field-row">
+              <label>C. Card</label>
+              <!--<input class="money inflow" type="number" step="0.01" value="291.23" />-->
+            </div>
+            <!--<div class="field-row">
+              <label>Other Card</label>
+              <input class="money inflow" type="number" step="0.01" value="168.44" />
+            </div>-->
+            <div class="field-row">
+              <label>Cash</label>
+              <!--<input class="money inflow" type="number" step="0.01" placeholder="0.00" />-->
+            </div>
+          </div>
+
+
+
+          <div class="section paid-section">
+<div class="section-title"><h2>PAID OUT</h2></div>
+<div id="paidOutRows" class="serial-list">
+<div class="serial-row"><span>1.</span><input class="paid-out money" type="number" step="0.01" placeholder=""></div>
+<div class="serial-row"><span>2.</span><input class="paid-out money" type="number" step="0.01" placeholder=""></div>
+<div class="serial-row"><span>3.</span><input class="paid-out money" type="number" step="0.01" placeholder=""></div>
+<div class="serial-row"><span>4.</span><input class="paid-out money" type="number" step="0.01" placeholder=""></div>
+<div class="serial-row"><span>5.</span><input class="paid-out money" type="number" step="0.01" placeholder=""></div>
+</div>
+<div class="total-row"><span>Total</span><strong id="paidOutTota"></strong></div>
+<div class="ha-title">H / A</div>
+<div class="named-list">
+<div class="named-row"><span>1.</span><input class="money paid-out-extra" type="number" step="0.01" placeholder=""></div>
+<div class="named-row"><span>2.</span><input class="money paid-out-extra" type="number" step="0.01" placeholder=""></div>
+<div class="named-row"><span>3.</span><input class="money paid-out-extra" type="number" step="0.01" placeholder=""></div>
+<div class="total-row"><span>Total</span><strong id="paidOutExtraTota"></strong></div>
+</div>
+</div>
+
+        </div>
+
+        <!-- RIGHT -->
+        <div class="column right-column">
+          <div class="section">
+            <div class="section-title">
+            </div>
+            <div class="field-row">
+              <label>Gas</label>
+              
+            </div>
+            <div class="field-row">
+              <label>Store</label>
+            
+            </div>
+            <div class="field-row">
+              <label>Lotto</label>
+              
+            </div>
+            <div class="total-row">
+              <span> Total</span>
+              <!--<strong id="saturdayTotal">$1,657.45</strong>-->
+            </div>
+          </div>
+
+          <div class="section pay-in-section">
+<div class="section-title"><h2>PAY IN</h2></div>
+
+<div class="named-list">
+<div class="named-row"><span>1</span><input class="money pay-in-extra" type="number" step="0.01" placeholder=""></div>
+<div class="named-row"><span>2</span><input class="money pay-in-extra" type="number" step="0.01" placeholder=""></div>
+<div class="named-row"><span>3</span><input class="money pay-in-extra" type="number" step="0.01" placeholder=""></div>
+<div class="total-row"><span>Total</span><strong id="payInExtraTota"></strong></div>
+</div>
+</div>
+<div class="section">
+<div class="section-title"><h2>CASH DROP</h2></div>
+<div id="cashDropRows" class="serial-list cash-drop-list">
+<div class="serial-row"><span>1.</span></div>
+<div class="serial-row"><span>2.</span><input class="cash-drop money" type="number" step="0.01" placeholder=""></div>
+<div class="serial-row"><span>3.</span><input class="cash-drop money" type="number" step="0.01" placeholder=""></div>
+<div class="serial-row"><span>4.</span><input class="cash-drop money" type="number" step="0.01" placeholder=""></div>
+<div class="serial-row"><span>5.</span><input class="cash-drop money" type="number" step="0.01" placeholder=""></div>
+</div>
+<div class="total-row"><span>Total</span></div>
+
+</div>
+</main>
+<div class="total-row"><span>NB:</span></div>
+  </div>
+  
+  
+  <script src="script.js"></script>
+</body>
+</html>
