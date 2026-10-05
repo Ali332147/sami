@@ -2041,3 +2041,99 @@ body.editing select {
     margin-bottom: 18px !important;
   }
 }
+
+
+/* =========================================================
+   ONE PAGE PRINT (phone + desktop) — width follows the paper,
+   height is never forced, hard cap stays below any page height
+   ========================================================= */
+@media print {
+  @page {
+    size: Letter portrait;
+    margin: 0.3in;
+  }
+
+  html, body {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    zoom: 1 !important;
+    transform: none !important;
+    background: #fff !important;
+    -webkit-text-size-adjust: 100% !important;
+  }
+
+  .app-shell {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: 9.3in !important;   /* below the smallest printable height */
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    break-after: avoid !important;
+    page-break-after: avoid !important;
+  }
+
+  .ledger-card {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  .ledger-head {
+    grid-template-columns: 1.5fr .75fr .75fr !important;
+  }
+
+  .ledger-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.12fr) minmax(0, 1fr) !important;
+  }
+
+  .topbar, .toolbar, .no-print, button {
+    display: none !important;
+  }
+}
+
+
+/* =========================================================
+   COMPACT HEADER (top-bottom space kom) — KEEP LAST
+   ========================================================= */
+.ledger-head > div {
+  padding: 6px 16px;
+}
+
+.ledger-head label {
+  margin: 0;
+}
+
+@media print {
+  .ledger-head {
+    min-height: 0 !important;
+    height: auto !important;
+  }
+
+  .ledger-head > div {
+    padding: 1px 8px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .ledger-head label {
+    margin: 0 !important;
+    line-height: 1 !important;
+  }
+
+  .ledger-head input {
+    height: 20px !important;
+    min-height: 0 !important;
+    padding: 0 4px !important;
+    line-height: 1 !important;
+  }
+}
