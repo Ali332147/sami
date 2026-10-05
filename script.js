@@ -17,16 +17,31 @@
     });
   }
 
+  function saveBlob(output) {
+    const blob = new Blob([output], { type: "text/html;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "BP-Wellwood-Ledger.html";
+    a.style.display = "none";
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      a.remove();
+      URL.revokeObjectURL(url);
+    }, 5000);
+  }
+
   function downloadLedger() {
+    let output;
     try {
-      const source = document.documentElement;
-      const clone = source.cloneNode(true);
+      const clone = document.documentElement.cloneNode(true);
       copyFormValues(document, clone);
 
       // Remove toolbar and all external dependencies.
       clone.querySelectorAll(".no-print, #downloadBtn, #printBtn").forEach(el => el.remove());
       clone.querySelectorAll('link[rel="stylesheet"]').forEach(el => el.remove());
-      clone.querySelectorAll('script').forEach(el => el.remove());
+      clone.querySelectorAll("script").forEach(el => el.remove());
 
       let cssText = "";
       for (const sheet of document.styleSheets) {
@@ -39,52 +54,39 @@
       style.textContent = cssText;
       clone.querySelector("head").appendChild(style);
 
-      const output = "<!doctype html>\n" + clone.outerHTML;
-      const blob = new Blob([output], {type: "text/html;charset=utf-8"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "BP-Wellwood-Ledger.html";
-      a.style.display = "none";
-      document.body.appendChild(a);
-      a.click();
-      setTimeout(() => {
-        a.remove();
-        URL.revokeObjectURL(url);
-      }, 1000);
+      output = "<!doctype html>\n" + clone.outerHTML;
     } catch (err) {
-      // Fallback: download the current page as HTML.
-      const output = "<!doctype html>\n" + document.documentElement.outerHTML;
-      const blob = new Blob([output], {type: "text/html;charset=utf-8"});
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = "BP-Wellwood-Ledger.html";
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      // Fallback: current page as plain HTML.
+      output = "<!doctype html>\n" + document.documentElement.outerHTML;
     }
+    saveBlob(output);
   }
 
   function printLedger() {
+    // iPhone: lay the page out at Letter width while printing.
+    // IMPORTANT: window.print() must run immediately inside the tap
+    // (no setTimeout), otherwise iPhone Safari blocks it.
+    const meta = document.querySelector('meta[name="viewport"]');
+    const original = meta ? meta.getAttribute("content") : null;
+    const restore = () => {
+      if (meta && original !== null) meta.setAttribute("content", original);
+    };
+    try {
+      if (meta) meta.setAttribute("content", "width=816");
+    } catch (e) {}
+    window.addEventListener("afterprint", restore, { once: true });
+    document.addEventListener("pointerdown", restore, { once: true });
     window.print();
   }
 
   window.downloadLedger = downloadLedger;
   window.printLedger = printLedger;
 
+  // One handler per button only (so Download does not run twice).
   document.addEventListener("DOMContentLoaded", () => {
     const d = document.getElementById("downloadBtn");
     const p = document.getElementById("printBtn");
-    if (d) {
-      d.type = "button";
-      d.onclick = downloadLedger;
-      d.addEventListener("click", downloadLedger);
-    }
-    if (p) {
-      p.type = "button";
-      p.onclick = printLedger;
-    }
+    if (d) { d.type = "button"; d.onclick = downloadLedger; }
+    if (p) { p.type = "button"; p.onclick = printLedger; }
   });
 })();
